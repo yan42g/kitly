@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+# Build
+dist/
+# Tauri
+src-tauri/target/
+# SQLite local
+*.db
+*.db-journal
+# OS
+.DS_Store
+# Env
+.env
+.env.local
+# IDE
+.vscode/
+.idea/
