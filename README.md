@@ -6,7 +6,7 @@ prompts copiables pour Claude Code.
 App perso construite avec Tauri v2 + React 19 + Tailwind v4.
 
 ## Dev
-\`\`\`bash
+```bash
 pnpm install
 pnpm tauri dev
-\`\`\`
+```
