@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { Outlet } from 'react-router'
 import Header from './Header'
 import Sidebar from './Sidebar'
+import { SearchProvider } from '../../context/search'
 
 // Layout persistant de l'application : header en haut, sidebar à gauche,
 // contenu (Outlet) à droite. Responsive : sur petit écran la sidebar devient
 // un panneau coulissant masqué par défaut.
-export default function AppShell() {
+function AppShellInner() {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
   return (
@@ -33,10 +34,23 @@ export default function AppShell() {
           </div>
         )}
 
-        <main className="min-w-0 flex-1 overflow-y-auto p-6">
-          <Outlet />
+        <main className="min-w-0 flex-1 overflow-y-auto">
+          {/* Conteneur centré à largeur max : évite l'étirement plein écran sur
+              grands moniteurs, padding responsive sur petits écrans. */}
+          <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>
+  )
+}
+
+// Fournit le contexte de recherche partagé (Header + Catalogue).
+export default function AppShell() {
+  return (
+    <SearchProvider>
+      <AppShellInner />
+    </SearchProvider>
   )
 }

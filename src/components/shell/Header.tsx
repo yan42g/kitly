@@ -1,14 +1,29 @@
 import { Menu, Search } from 'lucide-react'
+import { useLocation, useNavigate } from 'react-router'
 import ThemeToggle from './ThemeToggle'
+import { useSearch } from '../../context/search'
 
 interface HeaderProps {
   /** Ouvre/ferme la sidebar en petit écran. */
   onToggleSidebar: () => void
 }
 
-// En-tête : bouton sidebar (mobile) + logo à gauche, recherche (placeholder)
-// au centre, ThemeToggle à droite.
+// En-tête : bouton sidebar (mobile) + logo à gauche, recherche fonctionnelle
+// (filtre le catalogue) au centre, ThemeToggle à droite.
 export default function Header({ onToggleSidebar }: HeaderProps) {
+  const { query, setQuery } = useSearch()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  function handleChange(value: string) {
+    setQuery(value)
+    // La recherche s'applique au catalogue : on y ramène l'utilisateur dès
+    // qu'il commence à saisir depuis une autre route.
+    if (value && location.pathname !== '/') {
+      navigate('/')
+    }
+  }
+
   return (
     <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-surface px-4">
       <button
@@ -24,11 +39,17 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
         Kitly
       </span>
 
-      {/* Emplacement visuel pour la future recherche (sans logique à ce stade). */}
       <div className="ml-auto flex items-center gap-3">
-        <div className="hidden items-center gap-2 rounded-card border border-border bg-background px-3 py-1.5 text-sm text-muted sm:flex">
-          <Search className="size-4" />
-          <span>Rechercher…</span>
+        <div className="hidden items-center gap-2 rounded-card border border-border bg-background px-3 py-1.5 focus-within:border-accent sm:flex">
+          <Search className="size-4 text-muted" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => handleChange(e.target.value)}
+            placeholder="Rechercher une catégorie…"
+            aria-label="Rechercher une catégorie"
+            className="w-48 bg-transparent text-sm text-foreground outline-none placeholder:text-muted"
+          />
         </div>
         <ThemeToggle />
       </div>

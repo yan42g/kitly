@@ -1,6 +1,20 @@
 import type { LucideIcon } from 'lucide-react'
 
 /**
+ * Groupe de catégories (section d'organisation du catalogue et de la sidebar).
+ */
+export interface CategoryGroup {
+  /** Identifiant stable du groupe (référencé par Category.group). */
+  id: string
+  /** Label affiché de la section. */
+  label: string
+  /** Icône lucide du groupe. */
+  icon: LucideIcon
+  /** Couleur d'accent (nom de la palette, cf. src/lib/colors.ts). */
+  color: string
+}
+
+/**
  * Catégorie de composants UI affichée dans la bibliothèque.
  * `icon` référence directement un composant d'icône lucide-react.
  */
@@ -13,6 +27,8 @@ export interface Category {
   icon: LucideIcon
   /** Courte description du type de composants. */
   description: string
+  /** Groupe de rattachement (cf. CategoryGroup.id). */
+  group: string
 }
 
 /** Variante de surface appliquée à une proposition. */
