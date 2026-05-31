@@ -12,7 +12,7 @@ L'application SHALL afficher un layout persistant composé d'une barre latérale
 - **AND** seule la zone de contenu (Outlet) est remplacée par la nouvelle page
 
 ### Requirement: Routes placeholder partagées
-L'application SHALL exposer trois routes — `/` (Catalogue), `/category/:catId`, `/template/:catId/:tplId` — rendues à l'intérieur du layout AppShell via `<Outlet />`. La route `/` SHALL afficher la page Catalogue réelle (voir capability `catalogue`). Les routes `/category/:catId` et `/template/:catId/:tplId` SHALL afficher un contenu placeholder reflétant leurs paramètres d'URL jusqu'à leur finalisation ultérieure.
+L'application SHALL exposer deux routes — `/` (Catalogue) et `/category/:catId` (page catégorie) — rendues à l'intérieur du layout AppShell via `<Outlet />`. La route `/` (Catalogue) et la route `/category/:catId` SHALL afficher leur contenu réel (voir capabilities `catalogue`, `category-page`). La route `/template/:catId/:tplId` n'existe plus : le détail du template est rendu directement par la page catégorie. Plus aucune route n'est un placeholder.
 
 #### Scenario: Route catalogue
 - **WHEN** l'utilisateur ouvre `/`
@@ -20,11 +20,11 @@ L'application SHALL exposer trois routes — `/` (Catalogue), `/category/:catId`
 
 #### Scenario: Route catégorie avec paramètre
 - **WHEN** l'utilisateur ouvre `/category/cards`
-- **THEN** la page Catégorie s'affiche et indique le `catId` (`cards`)
+- **THEN** la page Catégorie réelle s'affiche (détail du template : sélecteur de variante + previews)
 
-#### Scenario: Route template avec paramètres
-- **WHEN** l'utilisateur ouvre `/template/cards/basic`
-- **THEN** la page Template placeholder s'affiche et indique le `catId` et le `tplId`
+#### Scenario: Ancienne route template supprimée
+- **WHEN** l'application déclare ses routes
+- **THEN** aucune route `/template/:catId/:tplId` n'est exposée
 
 ### Requirement: Mise en évidence du lien actif
 La sidebar SHALL mettre visuellement en évidence l'entrée correspondant à la route active.
