@@ -1,0 +1,15 @@
+/* Styles de base minimaux. Le design system (Tailwind v4 CSS-first) viendra à l'étape 4. */
+:root {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  color-scheme: light dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
